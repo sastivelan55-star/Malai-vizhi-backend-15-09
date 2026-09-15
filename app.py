@@ -508,10 +508,11 @@ def ingest_sensor_data():
             alert = AlertEngine.create_alert(
                 location_id=loc["id"],
                 trigger_type="SENSOR_THRESH",
-                risk_score=new_score,
+                score=new_score,
                 message=f"Hardware Sensor Alert: Critical values at {loc['name']} (Rain: {rain}mm, Soil: {soil}%, Inclination: {incl}°)",
-                latitude=loc["latitude"],
-                longitude=loc["longitude"]
+                severity=new_level,
+                lat=loc["latitude"],
+                lon=loc["longitude"]
             )
             AlertEngine.process_and_send(alert)
 
