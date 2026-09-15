@@ -505,7 +505,7 @@ def ingest_sensor_data():
         # Trigger alerts if risk is HIGH/CRITICAL and changed
         if new_level in ["HIGH", "CRITICAL"] and loc["risk_level"] not in ["HIGH", "CRITICAL"]:
             from services.notification_service import AlertEngine
-            alert = AlertEngine.create_alert(
+            AlertEngine.create_alert(
                 location_id=loc["id"],
                 trigger_type="SENSOR_THRESH",
                 score=new_score,
@@ -514,7 +514,6 @@ def ingest_sensor_data():
                 lat=loc["latitude"],
                 lon=loc["longitude"]
             )
-            AlertEngine.process_and_send(alert)
 
         return jsonify({"success": True, "message": "Sensor data ingested", "new_risk_level": new_level}), 200
 
